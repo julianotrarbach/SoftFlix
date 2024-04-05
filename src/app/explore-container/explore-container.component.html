@@ -14,10 +14,28 @@
       <ion-label>
         {{movie.Title}}
         <p>
-          <ion-icon name="list" color="primary" *ngIf="showButtons && movie.IsInMyList"></ion-icon>
-          <ion-icon name="eye" color="success" *ngIf="showButtons && movie.IsWatched"></ion-icon>
+          <ion-item position="stacked">
+            <ion-item>
+              <ion-icon name="play"></ion-icon>
+              <ion-label position="stacked">{{movie.Type}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="calendar"></ion-icon>
+              <ion-label position="stacked">{{movie.Year}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="showButtons && movie.IsInMyList">
+              <ion-icon name="list" color="primary"></ion-icon>
+              <ion-label position="stacked">My List</ion-label>
+            </ion-item>
+            <ion-item *ngIf="showButtons && movie.IsWatched">
+              <ion-icon name="eye" color="success"></ion-icon>
+              <ion-label position="stacked">Watched</ion-label>
+            </ion-item>
+          </ion-item>
         </p>
       </ion-label>
+
+
     </ion-item>
 
     <ion-item-options side="end" *ngIf="showButtons">
