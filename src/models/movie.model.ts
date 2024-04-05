@@ -5,4 +5,6 @@ export class MovieModel {
     imdbID: string = "";
     Type: string = "";
     Poster: string = "";
+    IsWatched: boolean = false;
+    IsInMyList: boolean = false;
 }

@@ -13,43 +13,24 @@ export class ExploreContainerComponent {
 
   @Input() movies?: Array<MovieModel>;
 
+
+
   constructor(
     private localStorageService: LocalStorageService,
     private alertController: AlertController,
     private toastController: ToastController
   ) { }
 
-  addWatched(data: any): void {
+  ionViewWillEnter() {
+    let myList: Array<MovieModel> = this.localStorageService.getItem("myList");
+    let watchedList: Array<MovieModel> = this.localStorageService.getItem("watchedList");
 
-    let list: Array<MovieModel> = this.localStorageService.getItem("watchedList");
+    this.movies?.forEach(movie => {
+      movie.IsInMyList = myList && myList.findIndex(m => m.imdbID === movie.imdbID) !== -1;
+      movie.IsWatched = watchedList && watchedList.findIndex(m => m.imdbID === movie.imdbID) !== -1;
+    });
 
-    const indexToRemove = list?.findIndex(m => m.imdbID === data.imdbID);
-    if (indexToRemove != null && indexToRemove !== -1) {
-      list.splice(indexToRemove, 1);
-      this.sucessMessage("Done");
-    } else {
-      if (!list) { list = [] };
-      list.push(data);
-      this.sucessMessage("Done");
-    }
 
-    this.localStorageService.setItem("watchedList", list);
-  }
-  addMyList(data: any): void {
-
-    let list: Array<MovieModel> = this.localStorageService.getItem("myList");
-
-    const indexToRemove = list?.findIndex(m => m.imdbID === data.imdbID);
-    if (indexToRemove != null && indexToRemove !== -1) {
-      list.splice(indexToRemove, 1);
-      this.sucessMessage("Done");
-    } else {
-      if (!list) { list = [] };
-      list.push(data);
-      this.sucessMessage("Done");
-    }
-
-    this.localStorageService.setItem("myList", list);
   }
 
   async sucessMessage(message: string) {
@@ -63,7 +44,37 @@ export class ExploreContainerComponent {
     await toast.present();
   }
 
-  async confirmMessageWatched(movie: MovieModel) {
+  addWatched(movie: MovieModel): void {
+
+    let list: Array<MovieModel> = this.localStorageService.getItem("watchedList");
+
+    const indexToRemove = list?.findIndex(m => m.imdbID === movie.imdbID);
+    if (indexToRemove == null || indexToRemove === -1) {
+      if (!list) { list = [] };
+      list.push(movie);
+      movie.IsWatched = true;
+      this.localStorageService.setItem("watchedList", list);
+      this.sucessMessage("Done");
+    }
+
+
+  }
+
+  delWatched(movie: MovieModel): void {
+
+    let list: Array<MovieModel> = this.localStorageService.getItem("watchedList");
+
+    const indexToRemove = list?.findIndex(m => m.imdbID === movie.imdbID);
+    if (indexToRemove != null && indexToRemove !== -1) {
+      list.splice(indexToRemove, 1);
+      movie.IsWatched = false;
+      this.localStorageService.setItem("watchedList", list);
+      this.sucessMessage("Done");
+    }
+
+  }
+
+  async confirmMessageDeleteWatched(movie: MovieModel) {
 
     const alert = await this.alertController.create({
       header: '',
@@ -71,15 +82,15 @@ export class ExploreContainerComponent {
       message: 'Are you sure in remove this one of Watched list?',
       buttons: [
         {
-          text: 'Sim',
+          text: 'OK',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            this.addWatched(movie);
+            this.delWatched(movie);
           },
         },
         {
-          text: 'Não',
+          text: 'Cancel',
           handler: () => {
           },
         },
@@ -88,6 +99,65 @@ export class ExploreContainerComponent {
 
     await alert.present();
   }
+
+  addMyList(movie: MovieModel): void {
+
+    let list: Array<MovieModel> = this.localStorageService.getItem("myList");
+
+    const indexToRemove = list?.findIndex(m => m.imdbID === movie.imdbID);
+    if (indexToRemove == null || indexToRemove === -1) {
+      if (!list) { list = [] };
+      list.push(movie);
+      movie.IsInMyList = true;
+      this.localStorageService.setItem("myList", list);
+      this.sucessMessage("Done");
+    }
+
+
+  }
+
+  delMyList(movie: MovieModel): void {
+
+    let list: Array<MovieModel> = this.localStorageService.getItem("myList");
+
+    const indexToRemove = list?.findIndex(m => m.imdbID === movie.imdbID);
+    if (indexToRemove != null && indexToRemove !== -1) {
+      list.splice(indexToRemove, 1);
+      movie.IsInMyList = false;
+      this.localStorageService.setItem("myList", list);
+      this.sucessMessage("Done");
+    }
+
+
+  }
+
+  async confirmMessageDeleteMyList(movie: MovieModel) {
+
+    const alert = await this.alertController.create({
+      header: '',
+      subHeader: '',
+      message: 'Are you sure in remove this one of My list?',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.delMyList(movie);
+          },
+        },
+        {
+          text: 'Cancel',
+          handler: () => {
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+
 
 
 
