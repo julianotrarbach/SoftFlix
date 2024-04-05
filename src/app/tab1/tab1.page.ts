@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from 'src/api/api.service';
+import { ApiService } from 'src/services/api.service';
 import { MovieModel } from 'src/models/movie.model';
 
 @Component({
@@ -9,43 +9,29 @@ import { MovieModel } from 'src/models/movie.model';
 })
 export class Tab1Page {
 
-  //constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) { }
 
   public selectedSegment : string = "0";
-  public movies: Array<MovieModel> = [
-    {
-      imdbID: "",
-      Title: "You Are So Not Invited to My Bat Mitzvah",
-      Year: "2023",
-      Type: "movies",
-      Poster: "https://m.media-amazon.com/images/M/MV5BZWQ3ZDQ3MTYtZWUyOS00YmFhLTllOWItNzNmNjE0ZDI5YWE5XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg"
-    }];
-
+  public movies: Array<MovieModel> = [];
   public series: Array<MovieModel> = [];
   public episodes: Array<MovieModel> = [];
-  public watched: Array<MovieModel> = [];
-  public myList: Array<MovieModel> = [];
+
 
   searchMovies(event: any) {
-    // this.apiService.search(event.target.value).subscribe(
-    //   (data) => {
+    this.apiService.search(event.target.value).subscribe(
+      (data) => {
 
-    //     this.movies = data.Search.filter(m => m.Type === 'movie');
-    //     this.series = data.Search.filter(m => m.Type === 'series');
-    //     this.episodes = data.Search.filter(m => m.Type === 'episodes');
+        this.movies = data.Search.filter(m => m.Type === 'movie');
+        this.series = data.Search.filter(m => m.Type === 'series');
+        this.episodes = data.Search.filter(m => m.Type === 'episodes');
 
-    //   },
-    //   (erro) => {
-    //     console.error('Sorry, we had a problem. Try again in few minutes!', erro);
-    //   }
-    // );
+      },
+      (erro) => {
+        console.error('Sorry, we had a problem. Try again in few minutes!', erro);
+      }
+    );
   }
 
-  addWatched(data: any): void {
-    this.watched.push(data);
-  }
-  addMyList(data: any): void {
-    this.myList.push(data);
-  }
+
 
 }

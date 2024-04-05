@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MovieModel } from 'src/models/movie.model';
+import { LocalStorageService } from 'src/services/local-storage.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {}
+
+  public movies : Array<MovieModel> = [];
+
+  ionViewWillEnter(){
+    this.movies = this.localStorageService.getItem("myList");
+    console.log(this.movies);
+  }
 
 }
