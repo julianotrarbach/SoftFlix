@@ -11,6 +11,7 @@ export class Tab1Page {
 
   //constructor(private apiService: ApiService) { }
 
+  public selectedSegment : string = "0";
   public movies: Array<MovieModel> = [
     {
       imdbID: "",
@@ -19,6 +20,7 @@ export class Tab1Page {
       Type: "movies",
       Poster: "https://m.media-amazon.com/images/M/MV5BZWQ3ZDQ3MTYtZWUyOS00YmFhLTllOWItNzNmNjE0ZDI5YWE5XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg"
     }];
+
   public series: Array<MovieModel> = [];
   public episodes: Array<MovieModel> = [];
   public watched: Array<MovieModel> = [];

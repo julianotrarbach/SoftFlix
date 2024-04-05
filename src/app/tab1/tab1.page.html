@@ -13,9 +13,41 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-item>
+    <ion-input
+      type="text"
+      placeholder="Search by title"
+      (keyup.enter)="searchMovies($event)"
+    ></ion-input>
+    <ion-icon
+      name="search"
+      slot="start"
+      class="search-icon"
+    ></ion-icon>
+  </ion-item>
 
-  <ion-input placeholder="Search by title" (keyup.enter)="searchMovies($event)"></ion-input>
 
-  <app-explore-container [movies]=this.movies></app-explore-container>
+  <ion-segment [(ngModel)]="selectedSegment">
+    <ion-segment-button value="1">
+      <ion-label>Movies</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>Series</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>episode</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <div *ngIf="selectedSegment === '1' || selectedSegment === '0'">
+    <app-explore-container [movies]=this.movies></app-explore-container>
+  </div>
+
+  <div *ngIf="selectedSegment === '2'">
+    <app-explore-container [movies]=this.series></app-explore-container>
+  </div>
+
+  <div *ngIf="selectedSegment === '3'">
+    <app-explore-container [movies]=this.episodes></app-explore-container>
+  </div>
 </ion-content>
