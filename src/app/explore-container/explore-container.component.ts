@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MovieModel } from 'src/models/movie.model';
 
 @Component({
   selector: 'app-explore-container',
@@ -7,6 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ExploreContainerComponent {
 
-  @Input() name?: string;
+  @Input() movies?: Array<MovieModel>;
 
 }

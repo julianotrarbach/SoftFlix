@@ -1,4 +1,13 @@
-<div id="container">
-  <strong>{{ name }}</strong>
-  <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-</div>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let movie of this.movies">
+          <ion-thumbnail slot="start">
+            <img alt="{{movie.Title}}" src="{{movie.Poster}}" />
+          </ion-thumbnail>
+          <ion-label>{{movie.Title}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>

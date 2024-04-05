@@ -14,7 +14,8 @@
   </ion-header>
 
 
-  <ion-input placeholder="Search by title"
-  (keyup.enter)="searchMovies($event)"></ion-input>
+  <ion-input placeholder="Search by title" (keyup.enter)="searchMovies($event)"></ion-input>
+
+  <app-explore-container [movies]=this.movies></app-explore-container>
 
 </ion-content>
