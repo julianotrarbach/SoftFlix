@@ -1,7 +1,8 @@
 <ion-list>
   <ion-item-sliding *ngFor="let movie of this.movies">
-    <ion-item-options side="start">
-      <ion-item-option color="primary" (click)="movie.IsInMyList ? confirmMessageDeleteMyList(movie) : addMyList(movie)">
+    <ion-item-options side="start" *ngIf="showButtons">
+      <ion-item-option color="primary"
+        (click)="movie.IsInMyList ? confirmMessageDeleteMyList(movie) : addMyList(movie)">
         <ion-icon aria-hidden="true" name="list"></ion-icon>
       </ion-item-option>
     </ion-item-options>
@@ -10,11 +11,22 @@
       <ion-thumbnail slot="start">
         <img alt="{{movie.Title}}" src="{{movie.Poster}}" />
       </ion-thumbnail>
-      <ion-label>{{movie.Title}}</ion-label>
+      <ion-label>
+        {{movie.Title}}
+      </ion-label>
+      <ion-icon name="list" color="primary" *ngIf="showButtons && movie.IsInMyList"></ion-icon>
+      <ion-icon name="eye" color="success" *ngIf="showButtons && movie.IsWatched"></ion-icon>
+
+
+
+
+
+
     </ion-item>
 
-    <ion-item-options side="end">
-      <ion-item-option color="success" (click)="movie.IsWatched ? confirmMessageDeleteWatched(movie) : addWatched(movie)">
+    <ion-item-options side="end" *ngIf="showButtons">
+      <ion-item-option color="success"
+        (click)="movie.IsWatched ? confirmMessageDeleteWatched(movie) : addWatched(movie)">
         <ion-icon aria-hidden="true" name="eye"></ion-icon>
       </ion-item-option>
     </ion-item-options>

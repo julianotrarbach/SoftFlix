@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { MovieModel } from 'src/models/movie.model';
@@ -12,6 +12,7 @@ import { LocalStorageService } from 'src/services/local-storage.service';
 export class ExploreContainerComponent {
 
   @Input() movies?: Array<MovieModel>;
+  @Input() showButtons?:boolean = true;
 
 
 
