@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { MovieModel } from 'src/models/movie.model';
 import { LocalStorageService } from 'src/services/local-storage.service';
 
@@ -14,7 +15,8 @@ export class ExploreContainerComponent {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
   addWatched(data: any): void {
@@ -51,11 +53,14 @@ export class ExploreContainerComponent {
   }
 
   async sucessMessage(message: string) {
-    const alert = await this.alertController.create({
-      message: message
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'top',
+      color: 'success'
     });
 
-    await alert.present();
+    await toast.present();
   }
 
   async confirmMessageWatched(movie: MovieModel) {
