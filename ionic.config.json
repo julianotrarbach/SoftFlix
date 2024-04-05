@@ -1,0 +1,7 @@
+{
+  "name": "SoftFlix",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
